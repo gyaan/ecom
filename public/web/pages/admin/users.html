@@ -1,0 +1,67 @@
+<div class="container" ng-controller="usersController as userCtrl">
+    <h3>Create User:</h3>
+    <hr/>
+    <form class="form-inline" name="createUser">
+        <div class="form-group">
+            <label class="sr-only" for="name">Name</label>
+            <input type="text" ng-model="userCtrl.user.name" class="form-control" id="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="last_name">Last Name</label>
+            <input type="text" ng-model="userCtrl.user.last_name" class="form-control" id="last_name"
+                   placeholder="Last name">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="email">Email address</label>
+            <input type="email" ng-model="userCtrl.user.email" class="form-control" id="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="mobile"></label>
+            <input type="number" ng-model="userCtrl.user.mobile" class="form-control" id="mobile" placeholder="Mobile">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" ng-model="userCtrl.user.password" class="form-control" id="exampleInputPassword3"
+                   placeholder="Password">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="userCtrl.user.is_admin"> Admin
+            </label>
+        </div>
+        <button type="submit" ng-click="userCtrl.createUser()" class="btn btn-success">Create</button>
+    </form>
+    <hr/>
+    <div ng-show="userCtrl.existingUser.length > 0">
+        <h3> Users </h3>
+        <hr/>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="user in userCtrl.existingUser">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.mobile}}</td>
+                <td>
+                    <button class="btn btn-success">Edit</button>
+                    <button class="btn btn-danger" ng-click="userCtrl.deleteUser(user)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
+</div>
+</div>
