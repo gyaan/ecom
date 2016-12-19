@@ -1,8 +1,8 @@
 /**
  * Created by lenskart on 16/12/16.
  */
-ecomApp.controller('productsController',['config', '$scope', '$http',
-    function (config, $scope, $http){
+ecomApp.controller('productsController',['config', '$rootScope', '$http','Auth',
+    function (config, $rootScope, $http, Auth){
 
         var productCtrl = this;
         //existing products
@@ -11,6 +11,9 @@ ecomApp.controller('productsController',['config', '$scope', '$http',
         var request = {
             'url': config.apiUrl + 'product',
             'method': 'get',
+            'headers':{
+                'Authorization':'Bearer '+$rootScope.token,
+            }
         };
         $http(request).then(function (response) {
             console.log(response.data);
@@ -26,7 +29,8 @@ ecomApp.controller('productsController',['config', '$scope', '$http',
                 'data': productCtrl.product,
                 'method': 'post',
                 'headers': {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization':'Bearer '+$rootScope.token,
                 }
             };
             $http(request).then(function (response) {
@@ -42,6 +46,9 @@ ecomApp.controller('productsController',['config', '$scope', '$http',
             var request = {
                 'url': config.apiUrl + 'product/' + product.id,
                 'method': 'delete',
+                'headers':{
+                    'Authorization':'Bearer '+$rootScope.token,
+                }
             }
             $http(request).then(function (response) {
 

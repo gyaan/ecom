@@ -11,7 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use Laravel\Lumen\Routing\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 /**
  * Class CartController
@@ -55,6 +55,14 @@ class CartController extends Controller
      */
     public function createCart(Request $request)
     {
+
+        $this->validate($request, [
+            'product_id' => 'required',
+            'user_id' => 'required',
+            'product_quantity' => 'required',
+        ]);
+
+
         $cart = Cart::create($request->all());
         return response()->json($cart);
     }
@@ -81,7 +89,34 @@ class CartController extends Controller
         $cart->product_quantity = $request->input('product_quantity');
         $cart->save();
         return response()->json($cart);
-
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function removeCart(Request $request)
+    {
+
+        $this->validate($request, [
+            'product_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $cart = Cart::where('product_id', $request->input('product_id'))
+            ->where('user_id', $request->input('user_id'))
+            ->where('status', 'in_cart')
+            ->get();
+
+        if (empty($cart))
+            return response()->json('no record found');
+
+        list($cart) = $cart;
+
+        $cart->status = 'removed_from_cart';
+        $cart->save();
+        return response()->json($cart);
+    }
+
 
 }

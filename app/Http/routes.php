@@ -32,6 +32,7 @@ $app->group(['prefix' => 'api/v1', 'namespace' => 'App\Http\Controllers'], funct
 
     /* routes for user */
     $app->get('user', 'UserController@index');
+    $app->get('user/cart/{id}','UserController@getCart');
     $app->get('user/{id}', 'UserController@getUser');
     $app->post('user', 'UserController@createUser');
     $app->put('user/{id}', 'UserController@updateUser');
@@ -40,6 +41,7 @@ $app->group(['prefix' => 'api/v1', 'namespace' => 'App\Http\Controllers'], funct
     /* routes for cart */
     $app->get('cart', 'CartController@index');
     $app->get('cart/{id}', 'CartController@getCart');
+    $app->post('cart/remove','CartController@removeCart');
     $app->post('cart', 'CartController@createCart');
     $app->put('cart/{id}', 'CartController@updateCart');
     $app->delete('cart/{id}', 'CartController@deleteCart');

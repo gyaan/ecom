@@ -1,8 +1,8 @@
 /**
  * Created by lenskart on 16/12/16.
  */
-ecomApp.controller('registerController', ['config', '$scope', '$http',
-    function (config, $scope, $http) {
+ecomApp.controller('registerController', ['config', '$scope', '$http','$window', '$rootScope', 'Auth',
+    function (config, $scope, $http, $window, $rootScope,Auth) {
      var registerCtrl = this;
      registerCtrl.userDetails= {};
 
@@ -16,11 +16,9 @@ ecomApp.controller('registerController', ['config', '$scope', '$http',
              }
          };
          $http(request).then(function (response) {
-             console.log(response);
+             registerCtrl.userDetails= {};
+             $window.location.href = '#!/account';
          }), function (response) {
-             console.log("problem while creating product");
-             console.log(response);
          };
-         console.log(registerCtrl.userDetails);
      }
 }]);

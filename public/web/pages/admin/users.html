@@ -1,35 +1,35 @@
 <div class="container" ng-controller="usersController as userCtrl">
     <h3>Create User:</h3>
     <hr/>
-    <form class="form-inline" name="createUser">
+    <form class="form-inline" name="createUser" novalidate>
         <div class="form-group">
             <label class="sr-only" for="name">Name</label>
-            <input type="text" ng-model="userCtrl.user.name" class="form-control" id="name" placeholder="Name">
+            <input type="text" ng-model="userCtrl.user.name" class="form-control" id="name" placeholder="Name" required>
         </div>
         <div class="form-group">
             <label class="sr-only" for="last_name">Last Name</label>
             <input type="text" ng-model="userCtrl.user.last_name" class="form-control" id="last_name"
-                   placeholder="Last name">
+                   placeholder="Last name" required>
         </div>
         <div class="form-group">
             <label class="sr-only" for="email">Email address</label>
-            <input type="email" ng-model="userCtrl.user.email" class="form-control" id="email" placeholder="Email">
+            <input type="email" ng-model="userCtrl.user.email" class="form-control" id="email" placeholder="Email" required>
         </div>
         <div class="form-group">
             <label class="sr-only" for="mobile"></label>
-            <input type="number" ng-model="userCtrl.user.mobile" class="form-control" id="mobile" placeholder="Mobile">
+            <input type="number" ng-model="userCtrl.user.mobile" class="form-control" id="mobile" placeholder="Mobile" required>
         </div>
         <div class="form-group">
             <label class="sr-only" for="exampleInputPassword3">Password</label>
             <input type="password" ng-model="userCtrl.user.password" class="form-control" id="exampleInputPassword3"
-                   placeholder="Password">
+                   placeholder="Password" required>
         </div>
         <div class="checkbox">
             <label>
                 <input type="checkbox" ng-model="userCtrl.user.is_admin"> Admin
             </label>
         </div>
-        <button type="submit" ng-click="userCtrl.createUser()" class="btn btn-success">Create</button>
+        <button type="submit" ng-click="createUser$valid&&userCtrl.createUser()" class="btn btn-success">Create</button>
     </form>
     <hr/>
     <div ng-show="userCtrl.existingUser.length > 0">

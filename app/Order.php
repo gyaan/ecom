@@ -21,6 +21,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = ['id', 'user_id', 'total_amount', 'total_items', 'status'];
+    protected $hidden = ['updated_at','created_at'];
 
     public function items()
     {

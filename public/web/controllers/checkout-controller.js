@@ -1,7 +1,17 @@
 /**
  * Created by lenskart on 16/12/16.
  */
-ecomApp.controller('checkoutController', ['config', '$scope', '$http',
-    function (config, $scope, $http) {
-    $scope.message = 'Contact us! JK. This is just a demo.';
-}]);
+ecomApp.controller('checkoutController', ['config', '$rootScope', '$http', '$cookies', 'addToCart', 'Auth',
+    function (config, $rootScope, $http, $cookies, addToCart, Auth) {
+        var checkoutCtrl = this;
+        checkoutCtrl.cartItems = {};
+        if(!$rootScope.isCartEmpty){
+            checkoutCtrl.cart = $rootScope.cart;
+        }
+       checkoutCtrl.removeFromCart = function(item){
+           addToCart.removeItemFromCart(item);
+           var index = checkoutCtrl.cart.items.indexOf(item);
+           checkoutCtrl.cart.items.splice(index, 1);
+       }
+
+    }]);

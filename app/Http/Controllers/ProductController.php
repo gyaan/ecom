@@ -23,7 +23,12 @@ class ProductController extends Controller
     public function __construct()
     {
         //only for logged in user
-        //$this->middleware('auth:api');
+        $this->middleware('admin', ['only' => [
+            'createProduct',
+            'deleteProduct',
+            'updateProduct',
+        ]]);
+
     }
 
 
@@ -52,6 +57,14 @@ class ProductController extends Controller
      */
     public function createProduct(Request $request)
     {
+
+        $this->validate($request, [
+            'sku' => 'required',
+            'cost_price' => 'required',
+            'selling_price' => 'required',
+            'quantity' => 'required',
+        ]);
+
         //check if product already exist
         $existingProduct = Product::where(array('sku' => $request->input('sku')))->get();
         if (empty($existingProduct))

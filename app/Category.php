@@ -22,6 +22,8 @@ class Category extends Model
      */
     protected $fillable = ['name', 'parent_category_id', 'is_active'];
 
+    protected $hidden = ['updated_at','created_at','is_active'];
+
     public function products()
     {
         return $this->hasMany('App\Products');

@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id');
             $table->float('total_amount');
             $table->integer('total_items');
-            $table->enum('statue',array('success','failed','delivered','pending'));
+            $table->enum('statue',array('success','failed','delivered','pending'))->default('success');
             $table->timestamps();
         });
     }

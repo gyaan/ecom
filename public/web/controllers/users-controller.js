@@ -1,8 +1,8 @@
 /**
  * Created by lenskart on 16/12/16.
  */
-ecomApp.controller('usersController', ['config', '$scope', '$http',
-    function (config, $scope, $http) {
+ecomApp.controller('usersController', ['config', '$scope', '$http', 'Auth',
+    function (config, $scope, $http, Auth) {
         var userCtrl = this;
         //existing users
         userCtrl.user = {}; //new user need to create
@@ -25,7 +25,8 @@ ecomApp.controller('usersController', ['config', '$scope', '$http',
                 'data': userCtrl.user,
                 'method': 'post',
                 'headers': {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + $rootScope.token
                 }
             };
             $http(request).then(function (response) {
@@ -41,9 +42,11 @@ ecomApp.controller('usersController', ['config', '$scope', '$http',
             var request = {
                 'url': config.apiUrl + 'user/' + user.id,
                 'method': 'delete',
+                'headers': {
+                    'Authorization': 'Bearer ' + $rootScope.token
+                }
             }
             $http(request).then(function (response) {
-
                 //if user got delete form the server
                 userCtrl.removeUser(user);
             }), function (response) {
@@ -55,14 +58,5 @@ ecomApp.controller('usersController', ['config', '$scope', '$http',
             var index = userCtrl.existingUser.indexOf(item);
             userCtrl.existingUser.splice(index, 1);
         }
-
-      /*  userCtrl.confirmation = function(){  //todo complete this option and add before delete
-
-        }
-        */
-
-        //console.log(config);
-        //$scope.message = 'Contact us! JK. This is just a demo.';
-        console.log(userCtrl.existingUser)
 
     }]);

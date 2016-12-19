@@ -21,6 +21,7 @@ class OrderItem extends Model
      * @var array
      */
     protected $fillable = ['product_id', 'products_count', 'order_id'];
+    protected $hidden = ['updated_at','created_at'];
 
     public function order()
     {

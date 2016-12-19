@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
@@ -28,28 +28,26 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+
         try {
             if (!$token = $this->jwt->attempt($request->only('email', 'password'))) {
-                return response()->json(['user_not_found'], 404);
+                return response()->json('User not found', 200);
             }
-
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], 500);
-
+            return response()->json('Token expired', 200);
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], 500);
-
+            return response()->json('Token invalid', 200);
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent' => $e->getMessage()], 500);
-
+            return response()->json($e->getMessage(), 500);
         }
 
-        return response()->json(compact('token'));
+        $userDetails = Auth::user();
+        $userDetails->token = $token;
+        return response()->json($userDetails);
     }
-
-
-
 }

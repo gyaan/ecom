@@ -30,9 +30,7 @@ class User extends Model implements
      *
      * @var array
      */
-    protected $hidden = [
-//        'password'
-    ];
+    protected $hidden = ['password','updated_at','created_at'];
 
 
     /**
